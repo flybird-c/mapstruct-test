@@ -21,11 +21,11 @@ import java.util.Objects;
 @Component
 public interface    DtoMapper {
     @Mapping(target = "status", source = "ajzt")
-    @Mapping(target = "source", expression = "java(ConvertAjly(record))")
-    @Mapping(target = "remark", source = "bz")
+    @Mapping(target = "source", expression = "java(ConvertAjly(record.getAjly()))")
+    @Mapping(target = "remark", expression = "java(ConvertBz(record.getBz()))")
     public abstract CaseDTO JzajConvertCaseDTO(Record record);
-     default String ConvertAjly(Record s){
-        String ajly = s.getAjly();
+     default String ConvertAjly(String s){
+        String ajly = s;
         if (Objects.equals(ajly,"101")){
             return  "来源A";
         }
@@ -35,13 +35,14 @@ public interface    DtoMapper {
         return null;
     }
 
-//     default String ConvertAjly(String ajly){
-//        if (Objects.equals(ajly,"101")){
-//            return  "来源A";
-//        }
-//        if (Objects.equals(ajly,"201")){
-//            return  "来源B";
-//        }
-//        return null;
-//    }
+     default String ConvertBz(String b){
+         String bz = b;
+         if (Objects.equals(bz,"这是备注")){
+            return  "是的是备注";
+        }
+        if (Objects.equals(bz,"201")){
+            return  "来源B";
+        }
+        return null;
+    }
 }

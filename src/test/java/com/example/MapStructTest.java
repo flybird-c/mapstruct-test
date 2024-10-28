@@ -26,7 +26,7 @@ public class MapStructTest {
         record.setAjzt("1");
         CaseDTO caseDTO = dtoMapper.JzajConvertCaseDTO(record);
         Assertions.assertEquals("来源A",caseDTO.getSource());
-        Assertions.assertSame(record.getBz(),caseDTO.getRemark());
+        Assertions.assertEquals("是的是备注",caseDTO.getRemark());
         Assertions.assertSame(record.getAjzt(),caseDTO.getStatus());
     }
 

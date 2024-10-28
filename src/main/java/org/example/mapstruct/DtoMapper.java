@@ -17,21 +17,31 @@ import java.util.Objects;
  *@date : 2024/10/16 14:29
  *@apiNote : 字段映射
  */
-@Slf4j
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 @Component
-public abstract class DtoMapper {
+public interface    DtoMapper {
     @Mapping(target = "status", source = "ajzt")
-    @Mapping(target = "source", expression = "java(ConvertAjly(record.getAjly()))")
+    @Mapping(target = "source", expression = "java(ConvertAjly(record))")
     @Mapping(target = "remark", source = "bz")
     public abstract CaseDTO JzajConvertCaseDTO(Record record);
-    String ConvertAjly(String s){
-        if (Objects.equals(s,"101")){
+     default String ConvertAjly(Record s){
+        String ajly = s.getAjly();
+        if (Objects.equals(ajly,"101")){
             return  "来源A";
         }
-        if (Objects.equals(s,"201")){
+        if (Objects.equals(ajly,"201")){
             return  "来源B";
         }
         return null;
     }
+
+//     default String ConvertAjly(String ajly){
+//        if (Objects.equals(ajly,"101")){
+//            return  "来源A";
+//        }
+//        if (Objects.equals(ajly,"201")){
+//            return  "来源B";
+//        }
+//        return null;
+//    }
 }
